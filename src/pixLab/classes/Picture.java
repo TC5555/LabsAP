@@ -216,8 +216,22 @@ public class Picture extends SimplePicture
       }
     }
   }
-  
-  
+
+  public void chromakey(Picture newBack)
+  {
+
+    Pixel[][] fromPixels = this.getPixels2D();
+    Pixel[][] toPixels = newBack.getPixels2D();
+for(int i = 0; i < fromPixels.length; i++) {
+  for (int j = 0; j < fromPixels[0].length; j++) {
+    if(fromPixels[i][j].getBlue() > fromPixels[i][j].getRed()){
+      fromPixels[i][j].setColor(toPixels[i][j].getColor());
+    }
+  }
+}
+
+  }
+
   /* Main method for testing - each class in Java can have a main 
    * method 
    */

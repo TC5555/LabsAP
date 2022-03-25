@@ -219,7 +219,6 @@ public class Picture extends SimplePicture
 
   public void chromakey(Picture newBack)
   {
-
     Pixel[][] fromPixels = this.getPixels2D();
     Pixel[][] toPixels = newBack.getPixels2D();
 for(int i = 0; i < fromPixels.length; i++) {
@@ -230,6 +229,62 @@ for(int i = 0; i < fromPixels.length; i++) {
   }
 }
 
+  }
+
+  /** Hide a black and white message in the current
+   * picture by changing the red to even and then
+   * setting it to odd if the message pixel is black
+   * @param messagePict the picture with a message
+   */
+  public void encode(Picture messagePict)
+  {
+
+    Pixel[][] messagePixels = messagePict.getPixels2D();
+    Pixel[][] currPixels = this.getPixels2D();
+    Pixel currPixel = null;
+    Pixel messagePixel = null;
+
+    for(int i = 0; i < currPixels.length; i++) {
+      for (int j = 0; j < currPixels[0].length; j++) {
+        if (currPixels[i][j].getRed() % 2 != 0){
+          currPixels[i][j].setRed(currPixels[i][j].getRed() - 1);
+        }
+        if(messagePixels[i][j].colorDistance(Color.black) <= 100) {
+          currPixels[i][j].setRed(currPixels[i][j].getRed() + 1);
+        }
+
+      }
+    }
+
+
+  }
+
+  /**
+   * Method to decode a message hidden in the
+   * red value of the current picture
+   * @return the picture with the hidden message
+   */
+  public Picture decode()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int height = this.getHeight();
+    int width = this.getWidth();
+    Pixel currPixel = null;
+    Pixel messagePixel = null;
+    Picture messagePicture = new Picture(height,width);
+    Pixel[][] messagePixels = messagePicture.getPixels2D();
+
+    for(int i = 0; i < messagePixels.length; i++) {
+      for (int j = 0; j < messagePixels[0].length; j++) {
+        if(pixels[i][j].getRed() % 2 != 0) {
+          messagePixels[i][j].setColor(Color.black);
+        }
+
+      }
+    }
+
+
+    return messagePicture;
   }
 
   /* Main method for testing - each class in Java can have a main 

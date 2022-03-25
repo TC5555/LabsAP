@@ -60,6 +60,18 @@ public class PictureTester
     mark.explore();
   }
 
+  /** Method to test encode and decode */
+  public static void testEncodeAndDecode()
+  {
+    Picture beach = new Picture("images/beach.jpg");
+    beach.explore();
+    Picture message = new Picture("images/msg.jpg");
+    beach.encode(message);
+    beach.explore();
+    Picture decoded = beach.decode();
+    decoded.explore();
+  }
+
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -83,8 +95,8 @@ public class PictureTester
     //testCopy();
     //testEdgeDetection();
     //testEdgeDetection2();
-    testChromakey();
-    //testEncodeAndDecode();
+    //testChromakey();
+    testEncodeAndDecode();
     //testGetCountRedOverValue(250);
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
